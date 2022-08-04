@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Application</title>
+    <script defer src="http://localhost:8000/socket.io/socket.io.js"></script>
+    <script defer src="./js/client.js"></script>
+    <script defer src="./js/sample.js"></script>
+
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="shortcut icon" href="#">
+</head>
+
+<body>
+    <nav>
+        <img class="logo" src="./chat.png" alt="">
+        <h1>Welcome to app</h1>
+    </nav>
+    <div class="container">
+        <!-- <div class="message right"></div>
+        <div class="message left"></div> -->
+    </div>
+    <div class="send">
+        <form action="#" id="send-container">
+            <input type="text" name="messageInp" id="messageInp">
+            <button class="btn" type="submit">Send</button>
+        </form>
+        <input type="file" id="myFile" name="filename">
+        <img id="img-send" src="https://img.icons8.com/color/48/000000/image.png" />
+        <!-- <button type="submit" class="btn">SEND ▶️</button> -->
+    </div>
+
+</body>
+
+</html>
