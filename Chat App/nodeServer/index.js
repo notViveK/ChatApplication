@@ -22,7 +22,18 @@ io.on('connection', socket => {
     socket.on('send', message => {
         socket.broadcast.emit('receive', { message: message, username: users[socket.id] })
     });
-
+    socket.on('multi-message', message => {
+        let first = (message).substring(1, (message).indexOf(' '));
+        console.log("first name is", first);
+        let array=first.split(",");
+        // console.log(array[0]);
+        // console.log(array[1]);
+        for(let i=0;i<array.length;i++){
+            console.log(array[i]);
+            socket.broadcast.to(namedata[array[i]]).emit('multi', { message: message, username: users[socket.id] })
+        }
+        
+    });
     socket.on('personal-message', message => {
         let first = (message).substring(1, (message).indexOf(' '));
         console.log("first name is", first);
