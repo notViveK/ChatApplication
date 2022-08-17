@@ -7,19 +7,25 @@ var file = document.getElementById("myFile");
 
 var audio = new Audio('ting.mp3')
 let value = false;
+let multi = false;
 let first = "";
 const append = (message, position) => {
+    value = false;
+    multi = false;
     const messsageElement = document.createElement('div')
     messsageElement.innerText = message;
     messsageElement.classList.add('message');
     messsageElement.classList.add(position);
     messageContainer.append(messsageElement);
     value = (messageInput.value).startsWith("@");
-    console.log(value);
     if (value == true) {
         first = (messageInput.value).substring(1, (messageInput.value).indexOf(' '));
     }
-    console.log(first);
+    if(value==true&&first.includes(',')){
+        multi=true;
+    }
+    // console.log(first);
+    // console.log(multi);
     if (position == 'left') {
         audio.play();
     }
@@ -32,11 +38,14 @@ const imgappend = (message, position) => {
     messsageElement.classList.add(position);
     messageContainer.append(messsageElement);
     value = (messageInput.value).startsWith("@");
-    console.log(value);
     if (value == true) {
         first = (messageInput.value).substring(1, (messageInput.value).indexOf(' '));
     }
-    console.log(first);
+    if(value==true&&first.includes(',')){
+        multi=true;
+    }
+    // console.log(first);
+    // console.log(multi);
     if (position == 'left') {
         audio.play();
     }
@@ -62,8 +71,11 @@ form.addEventListener('submit', (e) => {
     if (value == false) {
         socket.emit('send', message);
     }
-    else if (value == true) {
+    else if (multi==false&&value == true) {
         socket.emit('personal-message', message);
+    }
+    else if(multi==true){
+        socket.emit('multi-message',message);
     }
     messageInput.value = '';
 })
@@ -104,6 +116,10 @@ socket.on('user-joined', username => {
 })
 
 socket.on('receive', data => {
+    append(`${data.username}: ${data.message}`, 'left')
+})
+socket.on('multi', data => {
+    data.message = data.message.substring((data.message).indexOf(' '));
     append(`${data.username}: ${data.message}`, 'left')
 })
 socket.on('personal', data => {
